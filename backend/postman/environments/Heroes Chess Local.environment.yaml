@@ -1,0 +1,13 @@
+name: Heroes Chess Local
+values:
+  - key: base_url
+    value: 'http://localhost:8000'
+  - key: test_email
+    value: test@example.com
+  - key: test_password
+    value: password123
+  - key: access_token
+    value: ''
+  - key: refresh_token
+    value: ''
+color: 300

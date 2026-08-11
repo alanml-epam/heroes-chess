@@ -1,0 +1,10 @@
+$kind: collection
+name: Heroes Chess Auth
+description: Tests for the authentication endpoints of the Heroes Chess API
+variables:
+  - key: base_url
+    value: 'http://localhost:8000'
+  - key: access_token
+    value: ''
+  - key: refresh_token
+    value: ''

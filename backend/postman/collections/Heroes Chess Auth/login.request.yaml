@@ -1,0 +1,48 @@
+$kind: http-request
+name: Login
+method: POST
+url: '{{base_url}}/auth/login'
+order: 1000
+headers:
+  - key: Content-Type
+    value: application/json
+body:
+  type: json
+  content: |-
+    {
+      "email": "{{test_email}}",
+      "password": "{{test_password}}"
+    }
+scripts:
+  - type: afterResponse
+    language: text/javascript
+    code: |-
+      pm.test("Status code is 200", function () {
+        pm.response.to.have.status(200);
+      });
+
+      pm.test("Response has access_token", function () {
+        const json = pm.response.json();
+        pm.expect(json).to.have.property("access_token");
+        pm.expect(json.access_token).to.be.a("string").and.not.empty;
+      });
+
+      pm.test("Response has refresh_token", function () {
+        const json = pm.response.json();
+        pm.expect(json).to.have.property("refresh_token");
+        pm.expect(json.refresh_token).to.be.a("string").and.not.empty;
+      });
+
+      pm.test("token_type is bearer", function () {
+        const json = pm.response.json();
+        pm.expect(json.token_type).to.eql("bearer");
+      });
+
+      // Save tokens for subsequent requests
+      const json = pm.response.json();
+      if (json.access_token) {
+        pm.collectionVariables.set("access_token", json.access_token);
+      }
+      if (json.refresh_token) {
+        pm.collectionVariables.set("refresh_token", json.refresh_token);
+      }
