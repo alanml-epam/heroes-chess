@@ -10,11 +10,12 @@ python -m pip install --upgrade pip
 pip install -r backend/requirements.txt
 
 # create db
-python backend/scripts/create_db.py
+cd backend
+python -m scripts.create_db
 
 # run backend (from project root)
 cd backend
-.\.venv\Scripts\Activate.ps1
+venv\Scripts\Activate.bat
 uvicorn app.main:app --reload --port 8000
 ```
 
